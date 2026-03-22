@@ -4,15 +4,12 @@ import { motion } from 'motion/react';
 import { useGames } from './hooks/useGames';
 import { GameCard } from './components/GameCard';
 import { GameOverlay } from './components/GameOverlay';
-import { AICard } from './components/AICard';
-import { AIOverlay } from './components/AIOverlay';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
 import { Game } from './types';
 
 export default function App() {
   const { games, loading, error, searchQuery, setSearchQuery } = useGames();
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
-  const [showAI, setShowAI] = useState(false);
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent)] selection:text-white overflow-x-hidden">
@@ -136,18 +133,6 @@ export default function App() {
               layout
               className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
             >
-              {/* AI Assistant Card */}
-              {!searchQuery && (
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  whileHover={{ y: -5 }}
-                >
-                  <AICard onClick={() => setShowAI(true)} />
-                </motion.div>
-              )}
-
               {/* Game Cards */}
               {games.map((game) => (
                 <motion.div
@@ -211,10 +196,6 @@ export default function App() {
       <GameOverlay 
         game={selectedGame} 
         onClose={() => setSelectedGame(null)} 
-      />
-      <AIOverlay 
-        isOpen={showAI}
-        onClose={() => setShowAI(false)}
       />
       <ThemeSwitcher />
     </div>
