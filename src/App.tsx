@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Gamepad2, Loader2, AlertCircle, Sparkles } from 'lucide-react';
+import { Search, Gamepad2, Loader2, AlertCircle, Sparkles, Youtube } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useGames } from './hooks/useGames';
 import { useYouTubeVideos } from './hooks/useYouTubeVideos';
@@ -176,29 +176,42 @@ export default function App() {
               </motion.div>
             )}
 
-            {/* YouTube Search Section */}
+            {/* YouTube Search Section - More Noticeable */}
             <div className="mt-16">
-              <div className="mb-8 flex items-center justify-between border-b border-[var(--border)] pb-4">
-                <div>
-                  <h2 className="text-2xl font-black mb-1">YouTube Videos</h2>
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-1 bg-gradient-to-r from-red-500 to-transparent rounded"></div>
-                    <span className="text-sm font-medium text-[var(--text)]/60">
-                      {videosLoading ? 'Loading videos...' : `${videos.length} ${videos.length === 1 ? 'video' : 'videos'} ready to watch`}
-                    </span>
-                  </div>
+              <div className="mb-8 flex flex-col items-center justify-center">
+                <div className="flex items-center gap-3 mb-3">
+                  <Youtube size={32} className="text-red-600" />
+                  <h2 className="text-3xl font-black text-red-600 tracking-tight">YouTube Search</h2>
                 </div>
-                <div className="relative w-full max-w-xs">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-red-500/40" size={18} />
-                  <input
-                    type="text"
-                    placeholder="Search YouTube videos..."
-                    value={ytQuery}
-                    onChange={(e) => setYTQuery(e.target.value)}
-                    className="w-full rounded-lg border border-red-500/30 bg-[var(--surface)]/50 py-3 pl-10 pr-4 text-sm outline-none transition-all focus:border-red-500 focus:ring-2 focus:ring-red-500/20 backdrop-blur-sm hover:border-red-500/50"
-                  />
+                <div className="w-full max-w-lg flex flex-col items-center">
+                  <div className="relative w-full">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-red-500/40" size={20} />
+                    <input
+                      type="text"
+                      placeholder="Search YouTube videos..."
+                      value={ytQuery}
+                      onChange={(e) => setYTQuery(e.target.value)}
+                      className="w-full rounded-xl border-2 border-red-500 bg-white/90 py-4 pl-12 pr-4 text-base text-black font-semibold shadow-lg outline-none transition-all focus:border-red-600 focus:ring-2 focus:ring-red-500/20 hover:border-red-600"
+                      style={{ boxShadow: '0 2px 16px 0 rgba(239,68,68,0.10)' }}
+                    />
+                  </div>
+                  <a
+                    href="/youtube"
+                    className="mt-4 inline-flex items-center gap-2 rounded-lg bg-red-600 px-5 py-2.5 text-white font-bold shadow hover:bg-red-700 transition-all text-base"
+                    style={{ boxShadow: '0 2px 16px 0 rgba(239,68,68,0.15)' }}
+                  >
+                    <Youtube size={20} />
+                    Open Full YouTube
+                  </a>
+                </div>
+                <div className="flex items-center gap-2 mt-4">
+                  <div className="w-8 h-1 bg-gradient-to-r from-red-500 to-transparent rounded"></div>
+                  <span className="text-sm font-medium text-[var(--text)]/60">
+                    {videosLoading ? 'Loading videos...' : `${videos.length} ${videos.length === 1 ? 'video' : 'videos'} ready to watch`}
+                  </span>
                 </div>
               </div>
+              // ...existing code...
               {videosError ? (
                 <div className="mb-6 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
                   {videosError}
