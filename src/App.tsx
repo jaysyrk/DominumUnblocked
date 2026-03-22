@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import CustomEmbed from './components/CustomEmbed/CustomEmbed';
-import { Search, Gamepad2, Loader2, AlertCircle } from 'lucide-react';
+import { Search, Gamepad2, Loader2, AlertCircle, Sparkles, Youtube } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useGames } from './hooks/useGames';
 import { GameCard } from './components/GameCard';
