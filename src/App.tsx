@@ -1,29 +1,42 @@
 import { useState } from 'react';
-import { Search, Gamepad2, Loader2, AlertCircle } from 'lucide-react';
+import { Search, Gamepad2, Loader2, AlertCircle, Sparkles, Play } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useGames } from './hooks/useGames';
 import { GameCard } from './components/GameCard';
 import { GameOverlay } from './components/GameOverlay';
+import { AICard } from './components/AICard';
+import { AIOverlay } from './components/AIOverlay';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
 import { Game } from './types';
 
 export default function App() {
   const { games, loading, error, searchQuery, setSearchQuery } = useGames();
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
+  const [showAI, setShowAI] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent)] selection:text-white">
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent)] selection:text-white overflow-x-hidden">
+      {/* Animated Background */}
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-[var(--accent)]/10 blur-3xl animate-pulse"></div>
+        <div className="absolute top-1/2 -left-32 h-64 w-64 rounded-full bg-blue-500/5 blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+      </div>
+
       {/* Navigation / Header */}
-      <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--bg)]/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-4 sm:flex-row">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent)] text-white shadow-lg shadow-[var(--accent)]/20">
-              <Gamepad2 size={24} />
-            </div>
-            <h1 className="text-xl font-black tracking-tighter sm:text-2xl">
+      <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-gradient-to-b from-[var(--bg)] via-[var(--bg)]/95 to-[var(--bg)]/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-5 sm:flex-row">
+          <motion.div className="flex items-center gap-3" whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
+            <motion.div 
+              className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--accent)] to-blue-600 text-white shadow-lg shadow-[var(--accent)]/30"
+              whileHover={{ rotate: 10 }}
+              transition={{ type: "spring" }}
+            >
+              <Gamepad2 size={26} />
+            </motion.div>
+            <h1 className="text-2xl font-black tracking-tighter sm:text-3xl bg-gradient-to-r from-[var(--text)] to-[var(--accent)] bg-clip-text text-transparent">
               DOMINUM<span className="text-[var(--accent)]">UNBLOCKED</span>
             </h1>
-          </div>
+          </motion.div>
 
           <div className="relative w-full max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text)]/40" size={18} />
@@ -32,48 +45,110 @@ export default function App() {
               placeholder="Search 500+ games..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] py-2.5 pl-10 pr-4 text-sm outline-none transition-all focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
+              className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)]/50 py-3 pl-10 pr-4 text-sm outline-none transition-all focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/30 backdrop-blur-sm hover:border-[var(--accent)]/50"
             />
           </div>
         </div>
       </header>
 
+      {/* Hero Banner */}
+      {!searchQuery && !loading && (
+        <motion.div 
+          className="bg-gradient-to-r from-[var(--accent)]/20 via-blue-600/10 to-purple-600/20 border-b border-[var(--border)] py-12"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="mx-auto max-w-7xl px-4 text-center">
+            <motion.div className="flex items-center justify-center gap-2 mb-3">
+              <Sparkles size={20} className="text-[var(--accent)]" />
+              <span className="text-sm font-semibold text-[var(--accent)] uppercase tracking-widest">Get Started</span>
+              <Sparkles size={20} className="text-[var(--accent)]" />
+            </motion.div>
+            <h2 className="text-3xl sm:text-4xl font-black mb-3 bg-gradient-to-r from-white via-[var(--accent)] to-blue-400 bg-clip-text text-transparent">
+              Play 500+ Games Instantly
+            </h2>
+            <p className="text-[var(--text)]/70 max-w-2xl mx-auto">
+              Dive into an unlimited library of unblocked games. No downloads, no restrictions—just pure gaming fun.
+            </p>
+          </div>
+        </motion.div>
+      )}
+
       {/* Main Content */}
-      <main className="mx-auto max-w-7xl px-4 py-8">
+      <main className="mx-auto max-w-7xl px-4 py-12">
         {loading ? (
-          <div className="flex h-[60vh] flex-col items-center justify-center gap-4">
-            <Loader2 className="animate-spin text-[var(--accent)]" size={48} />
-            <p className="text-sm font-medium text-[var(--text)]/60">Loading game library...</p>
+          <div className="flex h-[60vh] flex-col items-center justify-center gap-6">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            >
+              <Loader2 className="text-[var(--accent)]" size={56} />
+            </motion.div>
+            <div className="text-center">
+              <p className="text-lg font-semibold text-[var(--text)]">Loading your game library...</p>
+              <p className="text-sm text-[var(--text)]/50 mt-2">Finding the best games for you</p>
+            </div>
           </div>
         ) : error ? (
-          <div className="flex h-[60vh] flex-col items-center justify-center gap-4 text-center">
-            <AlertCircle className="text-red-500" size={48} />
+          <div className="flex h-[60vh] flex-col items-center justify-center gap-6 text-center">
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <AlertCircle className="text-red-500 mx-auto" size={56} />
+            </motion.div>
             <div>
-              <h2 className="text-xl font-bold">Failed to load games</h2>
-              <p className="text-[var(--text)]/60">{error}</p>
+              <h2 className="text-2xl font-bold mb-2">Failed to load games</h2>
+              <p className="text-[var(--text)]/60 mb-4">{error}</p>
             </div>
-            <button 
+            <motion.button 
               onClick={() => window.location.reload()}
-              className="rounded-lg bg-[var(--accent)] px-6 py-2 font-semibold text-white transition-transform hover:scale-105"
+              className="rounded-lg bg-gradient-to-r from-[var(--accent)] to-blue-600 px-8 py-3 font-semibold text-white transition-all hover:shadow-lg hover:shadow-[var(--accent)]/30"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               Try Again
-            </button>
+            </motion.button>
           </div>
         ) : (
           <>
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-lg font-bold">
-                {searchQuery ? `Results for "${searchQuery}"` : "Popular Games"}
-                <span className="ml-2 text-sm font-normal text-[var(--text)]/40">
-                  ({games.length})
-                </span>
-              </h2>
-            </div>
+            <motion.div 
+              className="mb-8 flex items-center justify-between border-b border-[var(--border)] pb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div>
+                <h2 className="text-2xl font-black mb-1">
+                  {searchQuery ? `Results for "${searchQuery}"` : "Featured Games"}
+                </h2>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-1 bg-gradient-to-r from-[var(--accent)] to-transparent rounded"></div>
+                  <span className="text-sm font-medium text-[var(--text)]/60">
+                    {games.length} {games.length === 1 ? 'game' : 'games'} available
+                  </span>
+                </div>
+              </div>
+            </motion.div>
 
             <motion.div 
               layout
               className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
             >
+              {/* AI Assistant Card */}
+              {!searchQuery && (
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  whileHover={{ y: -5 }}
+                >
+                  <AICard onClick={() => setShowAI(true)} />
+                </motion.div>
+              )}
+
+              {/* Game Cards */}
               {games.map((game) => (
                 <motion.div
                   key={game.id}
@@ -91,26 +166,55 @@ export default function App() {
             </motion.div>
 
             {games.length === 0 && (
-              <div className="flex h-[40vh] flex-col items-center justify-center gap-2 text-center">
-                <p className="text-lg font-medium">No games found</p>
-                <p className="text-sm text-[var(--text)]/40">Try searching for something else</p>
-              </div>
+              <motion.div 
+                className="flex h-[40vh] flex-col items-center justify-center gap-4 text-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <motion.div
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                >
+                  <Gamepad2 className="text-[var(--accent)]/30 mx-auto" size={64} />
+                </motion.div>
+                <div>
+                  <p className="text-xl font-semibold">No games found</p>
+                  <p className="text-sm text-[var(--text)]/50 mt-1">Try searching for something else</p>
+                </div>
+              </motion.div>
             )}
           </>
         )}
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[var(--border)] py-12 text-center">
-        <p className="text-sm text-[var(--text)]/40">
-          © 2026 Dominum Unblocked. All games are property of their respective owners.
-        </p>
+      <footer className="border-t border-[var(--border)] py-16 text-center bg-gradient-to-b from-transparent to-[var(--bg)]/50">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <p className="text-sm text-[var(--text)]/50 mb-4">
+            © 2026 Dominum Unblocked. All games are property of their respective owners.
+          </p>
+          <div className="flex items-center justify-center gap-2 text-xs text-[var(--text)]/40">
+            <div className="w-1 h-1 rounded-full bg-[var(--accent)]/50"></div>
+            <span>Built with passion for gamers</span>
+            <div className="w-1 h-1 rounded-full bg-[var(--accent)]/50"></div>
+          </div>
+        </motion.div>
       </footer>
 
       {/* Overlays */}
       <GameOverlay 
         game={selectedGame} 
         onClose={() => setSelectedGame(null)} 
+      />
+      <AIOverlay 
+        isOpen={showAI}
+        onClose={() => setShowAI(false)}
       />
       <ThemeSwitcher />
     </div>

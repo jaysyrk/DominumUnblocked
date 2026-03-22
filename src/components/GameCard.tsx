@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { Play } from 'lucide-react';
 import { Game } from '../types';
 import { COVER_BASE_URL, HTML_BASE_URL } from '../constants';
 
@@ -13,31 +14,62 @@ export function GameCard({ game, onClick }: GameCardProps) {
     .replace('{HTML_URL}', HTML_BASE_URL);
 
   return (
-    <div
-      className="group relative flex flex-col overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--card-bg)] transition-all hover:border-[var(--accent)] hover:shadow-lg hover:shadow-[var(--accent)]/20 cursor-pointer"
+    <motion.div
+      className="group relative flex flex-col overflow-hidden rounded-xl border border-[var(--border)] bg-gradient-to-br from-[var(--card-bg)] to-[var(--card-bg)]/50 cursor-pointer h-full transition-all hover:border-[var(--accent)]/50"
       onClick={() => onClick(game)}
+      whileHover={{ y: -8, transition: { duration: 0.3 } }}
+      whileTap={{ scale: 0.95 }}
     >
-      <div className="aspect-square overflow-hidden">
-        <img
+      {/* Image Container */}
+      <div className="relative aspect-square overflow-hidden bg-[var(--surface)]">
+        <motion.img
           src={coverUrl}
           alt={game.name}
           loading="lazy"
           referrerPolicy="no-referrer"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="h-full w-full object-cover"
+          whileHover={{ scale: 1.15 }}
+          transition={{ duration: 0.5 }}
         />
+        
+        {/* Gradient Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        
+        {/* Play Button Overlay */}
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300"
+        >
+          <motion.div
+            className="rounded-full bg-gradient-to-r from-[var(--accent)] to-blue-600 p-4 text-white shadow-2xl shadow-[var(--accent)]/50"
+            whileHover={{ scale: 1.1 }}
+            animate={{ y: [0, -2, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <Play size={28} fill="currentColor" />
+          </motion.div>
+        </motion.div>
       </div>
-      <div className="p-3">
-        <h3 className="truncate text-sm font-semibold text-[var(--text)] group-hover:text-[var(--accent)]">
+
+      {/* Content */}
+      <motion.div 
+        className="flex-1 p-3 flex flex-col justify-end"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.1 }}
+      >
+        <h3 className="truncate text-sm font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors duration-200 line-clamp-2">
           {game.name}
         </h3>
+      </motion.div>
+
+      {/* Hover Glow Effect */}
+      <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" 
+           style={{
+             boxShadow: 'inset 0 0 20px rgba(122, 92, 255, 0.1)',
+             background: 'radial-gradient(circle at 30% 30%, rgba(122, 92, 255, 0.1) 0%, transparent 50%)'
+           }}>
       </div>
-      
-      {/* Hover Overlay */}
-      <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-        <div className="rounded-full bg-[var(--accent)] p-3 text-white shadow-xl">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-        </div>
-      </div>
-    </div>
+    </motion.div>
   );
 }
+
