@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Gamepad2, Loader2, AlertCircle, Sparkles, Youtube } from 'lucide-react';
+import CustomEmbed from './components/CustomEmbed/CustomEmbed';
 import { motion } from 'motion/react';
 import { useGames } from './hooks/useGames';
 import { GameCard } from './components/GameCard';
@@ -10,7 +11,6 @@ import { Game } from './types';
 export default function App() {
   const { games, loading, error, searchQuery, setSearchQuery } = useGames();
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
-  const [selectedVideo, setSelectedVideo] = useState<YouTubeVideo | null>(null);
 
   return (
     <div id="top" className="min-h-screen bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent)] selection:text-white overflow-x-hidden">
@@ -55,17 +55,7 @@ export default function App() {
 
 
 
-      {/* Link to YouTube Search Section at Bottom */}
-      <div className="w-full flex flex-col items-center justify-center pt-8 pb-4 bg-black/60 border-b border-[var(--border)] shadow-lg z-10">
-        <a
-          href="#youtube-search-bottom"
-          className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-5 py-2.5 text-white font-bold shadow hover:bg-red-700 transition-all text-base"
-          style={{ boxShadow: '0 2px 16px 0 rgba(239,68,68,0.15)' }}
-        >
-          <Youtube size={20} />
-          Go to YouTube Search
-        </a>
-      </div>
+
 
       {/* Hero Banner */}
       {!searchQuery && !loading && (
@@ -189,89 +179,7 @@ export default function App() {
               </motion.div>
             )}
 
-            {/* YouTube Search Section - More Noticeable */}
-            <div className="mt-16">
-              <div id="youtube-search-bottom" className="mb-8 flex flex-col items-center justify-center">
-                <div className="flex items-center gap-3 mb-3">
-                  <Youtube size={32} className="text-red-600" />
-                  <h2 className="text-3xl font-black text-red-600 tracking-tight">YouTube Search</h2>
-                </div>
-                <div className="w-full max-w-lg flex flex-col items-center">
-                  <div className="relative w-full">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-red-500/40" size={20} />
-                    <input
-                      type="text"
-                      placeholder="Search YouTube videos..."
-                      value={ytQuery}
-                      onChange={(e) => setYTQuery(e.target.value)}
-                      className="w-full rounded-xl border-2 border-red-500 bg-white/90 py-4 pl-12 pr-4 text-base text-black font-semibold shadow-lg outline-none transition-all focus:border-red-600 focus:ring-2 focus:ring-red-500/20 hover:border-red-600"
-                      style={{ boxShadow: '0 2px 16px 0 rgba(239,68,68,0.10)' }}
-                    />
-                  </div>
-                  <a
-                    href="/youtube"
-                    className="mt-4 inline-flex items-center gap-2 rounded-lg bg-red-600 px-5 py-2.5 text-white font-bold shadow hover:bg-red-700 transition-all text-base"
-                    style={{ boxShadow: '0 2px 16px 0 rgba(239,68,68,0.15)' }}
-                  >
-                    <Youtube size={20} />
-                    Open Full YouTube
-                  </a>
-                </div>
-                <div className="flex items-center gap-2 mt-4">
-                  <div className="w-8 h-1 bg-gradient-to-r from-red-500 to-transparent rounded"></div>
-                  <span className="text-sm font-medium text-[var(--text)]/60">
-                    {videosLoading ? 'Loading videos...' : `${videos.length} ${videos.length === 1 ? 'video' : 'videos'} ready to watch`}
-                  </span>
-                </div>
-              </div>
-              {/* Back to Top Button */}
-              <div className="flex justify-center mt-8">
-                <a
-                  href="#top"
-                  className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-white font-bold shadow hover:bg-blue-700 transition-all text-base"
-                  style={{ boxShadow: '0 2px 16px 0 rgba(37,99,235,0.15)' }}
-                >
-                  ↑ Back to Top
-                </a>
-              </div>
-              {videosError ? (
-                <div className="mb-6 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-                  {videosError}
-                </div>
-              ) : videosLoading ? (
-                <div className="flex h-40 items-center justify-center">
-                  <Loader2 className="text-red-500 animate-spin" size={40} />
-                </div>
-              ) : (
-                <motion.div
-                  layout
-                  className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
-                >
-                  {videos.map((video) => (
-                    <motion.div
-                      key={video.videoId}
-                      layout
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      whileHover={{ y: -5 }}
-                    >
-                      <YouTubeCard video={video} onClick={setSelectedVideo} />
-                    </motion.div>
-                  ))}
-                </motion.div>
-              )}
-              {!videosLoading && !videosError && videos.length === 0 && (
-                <motion.div
-                  className="flex h-[25vh] flex-col items-center justify-center gap-4 text-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <p className="text-xl font-semibold">No videos found</p>
-                  <p className="text-sm text-[var(--text)]/50 mt-1">Try another search to load different gameplay videos</p>
-                </motion.div>
-              )}
-            </div>
+
           </>
         )}
       </main>
@@ -300,10 +208,7 @@ export default function App() {
         game={selectedGame} 
         onClose={() => setSelectedGame(null)} 
       />
-      <YouTubeOverlay
-        video={selectedVideo}
-        onClose={() => setSelectedVideo(null)}
-      />
+      {/* Removed YouTubeOverlay */}
       <ThemeSwitcher />
     </div>
   );
