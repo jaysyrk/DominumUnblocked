@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
         </button>
       )}
 import { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import { Search, Gamepad2, Loader2, AlertCircle, Sparkles, Youtube } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useGames } from './hooks/useGames';
