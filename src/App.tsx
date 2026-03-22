@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Search, Gamepad2, Loader2, AlertCircle, Sparkles, Youtube } from 'lucide-react';
-import CustomEmbed from './components/CustomEmbed/CustomEmbed';
 import { motion } from 'motion/react';
 import { useGames } from './hooks/useGames';
 import { GameCard } from './components/GameCard';
@@ -14,10 +13,7 @@ export default function App() {
 
   return (
     <div id="top" className="min-h-screen bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent)] selection:text-white overflow-x-hidden">
-      {/* AI Chat Embed */}
-      <div className="w-full" style={{ minHeight: 400, marginBottom: 32 }}>
-        <CustomEmbed />
-      </div>
+
       {/* Animated Background */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-[var(--accent)]/10 blur-3xl animate-pulse"></div>
