@@ -56,39 +56,16 @@ export default function App() {
 
 
 
-      {/* YouTube Search Section - Directly Below Navigation, Always Visible */}
+      {/* Link to YouTube Search Section at Bottom */}
       <div className="w-full flex flex-col items-center justify-center pt-8 pb-4 bg-black/60 border-b border-[var(--border)] shadow-lg z-10">
-        <div className="flex items-center gap-3 mb-2">
-          <Youtube size={28} className="text-red-600" />
-          <span className="text-2xl font-bold text-red-600 tracking-tight">YouTube Search</span>
-        </div>
-        <div className="w-full max-w-lg flex flex-col items-center">
-          <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-red-500/40" size={20} />
-            <input
-              type="text"
-              placeholder="Search YouTube videos..."
-              value={ytQuery}
-              onChange={(e) => setYTQuery(e.target.value)}
-              className="w-full rounded-xl border-2 border-red-500 bg-white/90 py-3 pl-12 pr-4 text-base text-black font-semibold shadow-lg outline-none transition-all focus:border-red-600 focus:ring-2 focus:ring-red-500/20 hover:border-red-600"
-              style={{ boxShadow: '0 2px 16px 0 rgba(239,68,68,0.10)' }}
-            />
-          </div>
-          <a
-            href="/youtube"
-            className="mt-3 inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-white font-bold shadow hover:bg-red-700 transition-all text-base"
-            style={{ boxShadow: '0 2px 16px 0 rgba(239,68,68,0.15)' }}
-          >
-            <Youtube size={18} />
-            Open Full YouTube
-          </a>
-        </div>
-        <div className="flex items-center gap-2 mt-3">
-          <div className="w-8 h-1 bg-gradient-to-r from-red-500 to-transparent rounded"></div>
-          <span className="text-xs font-medium text-[var(--text)]/60">
-            {videosLoading ? 'Loading videos...' : `${videos.length} ${videos.length === 1 ? 'video' : 'videos'} ready to watch`}
-          </span>
-        </div>
+        <a
+          href="#youtube-search-bottom"
+          className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-5 py-2.5 text-white font-bold shadow hover:bg-red-700 transition-all text-base"
+          style={{ boxShadow: '0 2px 16px 0 rgba(239,68,68,0.15)' }}
+        >
+          <Youtube size={20} />
+          Go to YouTube Search
+        </a>
       </div>
 
       {/* Hero Banner */}
@@ -215,7 +192,7 @@ export default function App() {
 
             {/* YouTube Search Section - More Noticeable */}
             <div className="mt-16">
-              <div className="mb-8 flex flex-col items-center justify-center">
+              <div id="youtube-search-bottom" className="mb-8 flex flex-col items-center justify-center">
                 <div className="flex items-center gap-3 mb-3">
                   <Youtube size={32} className="text-red-600" />
                   <h2 className="text-3xl font-black text-red-600 tracking-tight">YouTube Search</h2>

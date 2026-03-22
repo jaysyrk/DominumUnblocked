@@ -10,7 +10,6 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/youtube" element={<YouTubeFullPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
