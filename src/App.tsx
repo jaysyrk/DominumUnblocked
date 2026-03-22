@@ -80,6 +80,8 @@ export default function App() {
           <div className="relative w-full max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text)]/40" size={18} />
             <input
+              id="games-search"
+              name="games-search"
               type="text"
               placeholder="Search 500+ games..."
               value={searchQuery}
@@ -238,6 +240,8 @@ export default function App() {
                   <div className="relative w-full">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-red-500/40" size={20} />
                     <input
+                      id="youtube-search"
+                      name="youtube-search"
                       type="text"
                       placeholder="Search YouTube videos..."
                       value={ytQuery}

@@ -19,6 +19,8 @@ const MoviesPage: React.FC = () => {
       <h1 className="text-3xl font-bold mb-6 text-center">Movies</h1>
       <div className="flex justify-center mb-8">
         <input
+          id="movies-search"
+          name="movies-search"
           type="text"
           placeholder="Search movies..."
           value={search}
