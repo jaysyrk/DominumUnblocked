@@ -1,16 +1,4 @@
-// Trigger redeploy: dummy comment
 import React, { useState, useEffect } from "react";
-export default function App() {
-  // State for showing the back-to-top button
-  const [showBackToTop, setShowBackToTop] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 100);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 import { Search, Gamepad2, Loader2, AlertCircle, Sparkles, Youtube } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useGames } from './hooks/useGames';
@@ -23,6 +11,16 @@ import { YouTubeOverlay } from './components/YouTubeOverlay';
 import { Game } from './types';
 
 export default function App() {
+  // State for showing the back-to-top button
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 100);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   const { games, loading, error, searchQuery, setSearchQuery } = useGames();
   const [ytQuery, setYTQuery] = useState('');
   const { videos, loading: videosLoading, error: videosError } = useYouTubeVideos(ytQuery);
