@@ -18,7 +18,7 @@ export default function App() {
   const [selectedVideo, setSelectedVideo] = useState<YouTubeVideo | null>(null);
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent)] selection:text-white overflow-x-hidden">
+    <div id="top" className="min-h-screen bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent)] selection:text-white overflow-x-hidden">
       {/* Animated Background */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-[var(--accent)]/10 blur-3xl animate-pulse"></div>
@@ -225,7 +225,16 @@ export default function App() {
                   </span>
                 </div>
               </div>
-              // ...existing code...
+              {/* Back to Top Button */}
+              <div className="flex justify-center mt-8">
+                <a
+                  href="#top"
+                  className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-white font-bold shadow hover:bg-blue-700 transition-all text-base"
+                  style={{ boxShadow: '0 2px 16px 0 rgba(37,99,235,0.15)' }}
+                >
+                  ↑ Back to Top
+                </a>
+              </div>
               {videosError ? (
                 <div className="mb-6 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
                   {videosError}
