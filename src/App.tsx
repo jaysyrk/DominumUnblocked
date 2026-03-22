@@ -75,23 +75,6 @@ export default function App() {
         </div>
       </header>
 
-      {/* AI Chatbot pinned at the top */}
-      <div style={{ maxWidth: 900, margin: "2rem auto", textAlign: "center" }}>
-        <h2 style={{ fontWeight: 700, fontSize: 24, marginBottom: 12 }}>AI Chatbot</h2>
-        <iframe
-          src="https://yuntian-deng-chatgpt.hf.space"
-          frameBorder="0"
-          width="100%"
-          height="500"
-          title="Free Chatbot"
-          style={{
-            border: "1px solid #ccc",
-            borderRadius: "12px",
-            minHeight: 450,
-            background: "#fff"
-          }}
-        />
-      </div>
 
 
 
