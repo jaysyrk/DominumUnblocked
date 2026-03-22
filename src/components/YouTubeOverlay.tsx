@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Maximize2, ExternalLink } from 'lucide-react';
+import { X, Maximize2 } from 'lucide-react';
 import { YouTubeVideo } from './YouTubeCard';
 
 interface YouTubeOverlayProps {
@@ -12,12 +12,6 @@ export function YouTubeOverlay({ video, onClose }: YouTubeOverlayProps) {
     const iframe = document.getElementById('youtube-iframe') as HTMLIFrameElement;
     if (iframe) {
       iframe.requestFullscreen().catch(console.error);
-    }
-  };
-
-  const handleOpenInYouTube = () => {
-    if (video) {
-      window.open(`https://www.youtube.com/watch?v=${video.videoId}`, '_blank');
     }
   };
 
@@ -40,13 +34,6 @@ export function YouTubeOverlay({ video, onClose }: YouTubeOverlayProps) {
             </div>
             <div className="flex items-center gap-2 flex-shrink-0">
               <button
-                onClick={handleOpenInYouTube}
-                className="rounded-lg p-2 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
-                title="Open in YouTube"
-              >
-                <ExternalLink size={20} />
-              </button>
-              <button
                 onClick={handleFullscreen}
                 className="rounded-lg p-2 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
                 title="Fullscreen"
@@ -67,9 +54,9 @@ export function YouTubeOverlay({ video, onClose }: YouTubeOverlayProps) {
           <div className="relative flex-1 bg-black">
             <iframe
               id="youtube-iframe"
-              src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1`}
+              src={`https://www.youtube-nocookie.com/embed/${video.videoId}?autoplay=1&rel=0&modestbranding=1`}
               className="h-full w-full border-none"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
               allowFullScreen
               title={video.title}
             />
