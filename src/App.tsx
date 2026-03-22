@@ -1,24 +1,24 @@
 import { useState } from 'react';
-import { Search, Gamepad2, Loader2, AlertCircle, Sparkles, Youtube } from 'lucide-react';
+import CustomEmbed from './components/CustomEmbed/CustomEmbed';
+import { Search, Gamepad2, Loader2, AlertCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useGames } from './hooks/useGames';
-import { useYouTubeVideos } from './hooks/useYouTubeVideos';
 import { GameCard } from './components/GameCard';
 import { GameOverlay } from './components/GameOverlay';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
-import { YouTubeCard, YouTubeVideo } from './components/YouTubeCard';
-import { YouTubeOverlay } from './components/YouTubeOverlay';
 import { Game } from './types';
 
 export default function App() {
   const { games, loading, error, searchQuery, setSearchQuery } = useGames();
-  const [ytQuery, setYTQuery] = useState('');
-  const { videos, loading: videosLoading, error: videosError } = useYouTubeVideos(ytQuery);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<YouTubeVideo | null>(null);
 
   return (
     <div id="top" className="min-h-screen bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent)] selection:text-white overflow-x-hidden">
+      {/* AI Chat Embed */}
+      <div className="w-full" style={{ minHeight: 400, marginBottom: 32 }}>
+        <CustomEmbed />
+      </div>
       {/* Animated Background */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-[var(--accent)]/10 blur-3xl animate-pulse"></div>
