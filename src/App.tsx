@@ -42,6 +42,8 @@ export default function App() {
     <div className="bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent)] selection:text-white overflow-x-hidden">
 
 
+      {/* Tall test div for scrollbar debug - REMOVE after testing */}
+      <div style={{height: '2000px', background: 'transparent'}}></div>
       {/* Animated Background */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-[var(--accent)]/10 blur-3xl animate-pulse"></div>
