@@ -1,15 +1,21 @@
 import { useState } from 'react';
-import { Search, Gamepad2, Loader2, AlertCircle, Sparkles, Play } from 'lucide-react';
+import { Search, Gamepad2, Loader2, AlertCircle, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useGames } from './hooks/useGames';
+import { useYouTubeVideos } from './hooks/useYouTubeVideos';
 import { GameCard } from './components/GameCard';
 import { GameOverlay } from './components/GameOverlay';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
+import { YouTubeCard, YouTubeVideo } from './components/YouTubeCard';
+import { YouTubeOverlay } from './components/YouTubeOverlay';
 import { Game } from './types';
 
 export default function App() {
   const { games, loading, error, searchQuery, setSearchQuery } = useGames();
+  const [ytQuery, setYTQuery] = useState('');
+  const { videos, loading: videosLoading, error: videosError } = useYouTubeVideos(ytQuery);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<YouTubeVideo | null>(null);
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent)] selection:text-white overflow-x-hidden">
@@ -169,6 +175,68 @@ export default function App() {
                 </div>
               </motion.div>
             )}
+
+            {/* YouTube Search Section */}
+            <div className="mt-16">
+              <div className="mb-8 flex items-center justify-between border-b border-[var(--border)] pb-4">
+                <div>
+                  <h2 className="text-2xl font-black mb-1">YouTube Videos</h2>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-1 bg-gradient-to-r from-red-500 to-transparent rounded"></div>
+                    <span className="text-sm font-medium text-[var(--text)]/60">
+                      {videosLoading ? 'Loading videos...' : `${videos.length} ${videos.length === 1 ? 'video' : 'videos'} ready to watch`}
+                    </span>
+                  </div>
+                </div>
+                <div className="relative w-full max-w-xs">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-red-500/40" size={18} />
+                  <input
+                    type="text"
+                    placeholder="Search YouTube videos..."
+                    value={ytQuery}
+                    onChange={(e) => setYTQuery(e.target.value)}
+                    className="w-full rounded-lg border border-red-500/30 bg-[var(--surface)]/50 py-3 pl-10 pr-4 text-sm outline-none transition-all focus:border-red-500 focus:ring-2 focus:ring-red-500/20 backdrop-blur-sm hover:border-red-500/50"
+                  />
+                </div>
+              </div>
+              {videosError ? (
+                <div className="mb-6 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                  {videosError}
+                </div>
+              ) : videosLoading ? (
+                <div className="flex h-40 items-center justify-center">
+                  <Loader2 className="text-red-500 animate-spin" size={40} />
+                </div>
+              ) : (
+                <motion.div
+                  layout
+                  className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+                >
+                  {videos.map((video) => (
+                    <motion.div
+                      key={video.videoId}
+                      layout
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      whileHover={{ y: -5 }}
+                    >
+                      <YouTubeCard video={video} onClick={setSelectedVideo} />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+              {!videosLoading && !videosError && videos.length === 0 && (
+                <motion.div
+                  className="flex h-[25vh] flex-col items-center justify-center gap-4 text-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <p className="text-xl font-semibold">No videos found</p>
+                  <p className="text-sm text-[var(--text)]/50 mt-1">Try another search to load different gameplay videos</p>
+                </motion.div>
+              )}
+            </div>
           </>
         )}
       </main>
@@ -196,6 +264,10 @@ export default function App() {
       <GameOverlay 
         game={selectedGame} 
         onClose={() => setSelectedGame(null)} 
+      />
+      <YouTubeOverlay
+        video={selectedVideo}
+        onClose={() => setSelectedVideo(null)}
       />
       <ThemeSwitcher />
     </div>
