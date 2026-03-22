@@ -39,7 +39,7 @@ export default function App() {
 
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent)] selection:text-white overflow-x-hidden">
+    <div className="bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent)] selection:text-white overflow-x-hidden">
       {/* Back to Top Floating Button */}
       {showBackToTop && (
         <button
