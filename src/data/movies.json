@@ -1,3 +1,38 @@
+  ,{
+    "title": "The Super Mario Bros. Movie",
+    "link": "https://drive.google.com/file/d/1q2pk3lo5VIDWKQq2lCh_UTC_V9Zkv-_X/view",
+    "imageUrl": "https://cdn.jsdelivr.net/gh/dino-cmxy/Chillkirbcentrall@main/the-super-mario-bros-movie_7bqmuyso.jpg",
+    "description": "Mario and Luigi save a princess in underground world.",
+    "year": 2023
+  },
+  {
+    "title": "Sonic the Hedgehog",
+    "link": "https://drive.google.com/file/d/1h1hi-3Hn1awll6u51WQnGjkHqm3uJejF/view",
+    "imageUrl": "https://cdn.jsdelivr.net/gh/dino-cmxy/Chillkirbcentrall@main/MV5BYTg2Yjc5MzItNzVmMi00MTllLWI2MDQtOTYyOWNjYWIxNzEzXkEyXkFqcGc%40._V1_FMjpg_UX1000_.jpg",
+    "description": "Sonic teams with police officer to stop Dr. Robotnik.",
+    "year": 2020
+  },
+  {
+    "title": "Sonic the Hedgehog 2",
+    "link": "https://drive.google.com/file/d/1cXe1a5ueZU9U_QZBU1-XpgNK0s6wi4o6/view",
+    "imageUrl": "https://cdn.jsdelivr.net/gh/dino-cmxy/MovieImages@main/sonic_the_hedgehog_two_ver13_xlg.avif",
+    "description": "Sonic and Tails find Master Emerald before villains.",
+    "year": 2022
+  },
+  {
+    "title": "Sonic the Hedgehog 3",
+    "link": "https://drive.google.com/file/d/1-zHQI9U47xaDtLR9qNpHGBmk63Nnc07b/view?usp=sharing",
+    "imageUrl": "https://cdn.jsdelivr.net/gh/dino-cmxy/Chillkirbcentrall@main/IMG_4074-966x1200.jpg",
+    "description": "Sonic faces Shadow the Hedgehog in new adventure.",
+    "year": 2024
+  },
+  {
+    "title": "Sonic OVA",
+    "link": "https://drive.google.com/file/d/1_vnuQWGnvMa4uvt9c2MVYYznq_FjgHav/view",
+    "imageUrl": "https://cdn.jsdelivr.net/gh/dino-cmxy/MovieImages@main/SonicanimeVHS.jpg",
+    "description": "Animated adventure to stop Dr. Robotnik's takeover.",
+    "year": 1996
+  }
 [
   {
     "title": "Deadpool and Wolverine",
