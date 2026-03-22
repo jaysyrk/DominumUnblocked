@@ -49,6 +49,7 @@ export default function App() {
       {/* Navigation / Header */}
       <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-gradient-to-b from-[var(--bg)] via-[var(--bg)]/95 to-[var(--bg)]/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-5 sm:flex-row">
+
           <motion.div className="flex items-center gap-3" whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
             <motion.div 
               className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--accent)] to-blue-600 text-white shadow-lg shadow-[var(--accent)]/30"
@@ -61,6 +62,16 @@ export default function App() {
               DOMINUM<span className="text-[var(--accent)]">UNBLOCKED</span>
             </h1>
           </motion.div>
+
+          {/* Movies Page Link */}
+          <nav className="mt-4 sm:mt-0 flex gap-4">
+            <a
+              href="/movies"
+              className="inline-block rounded-lg bg-gradient-to-r from-blue-600 to-[var(--accent)] px-4 py-2 text-white font-semibold shadow hover:from-blue-700 hover:to-[var(--accent)]/80 transition-all text-sm"
+            >
+              🎬 Movies
+            </a>
+          </nav>
 
           <div className="relative w-full max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text)]/40" size={18} />
