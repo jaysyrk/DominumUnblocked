@@ -2,14 +2,19 @@ import { useState } from 'react';
 import { Search, Gamepad2, Loader2, AlertCircle, Sparkles, Play } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useGames } from './hooks/useGames';
+import { useYouTube } from './hooks/useYouTube';
 import { GameCard } from './components/GameCard';
 import { GameOverlay } from './components/GameOverlay';
+import { YouTubeCard, YouTubeVideo } from './components/YouTubeCard';
+import { YouTubeOverlay } from './components/YouTubeOverlay';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
 import { Game } from './types';
 
 export default function App() {
   const { games, loading, error, searchQuery, setSearchQuery } = useGames();
+  const { videos: youtubeVideos } = useYouTube();
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<YouTubeVideo | null>(null);
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] selection:bg-[var(--accent)] selection:text-white overflow-x-hidden">
@@ -39,7 +44,7 @@ export default function App() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text)]/40" size={18} />
             <input
               type="text"
-              placeholder="Search 500+ games..."
+              placeholder="Search 500+ games and YouTube videos..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full rounded-lg border border-[var(--border)] bg-[var(--surface)]/50 py-3 pl-10 pr-4 text-sm outline-none transition-all focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/30 backdrop-blur-sm hover:border-[var(--accent)]/50"
@@ -133,6 +138,22 @@ export default function App() {
               layout
               className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
             >
+              {/* YouTube Cards (only when no search) */}
+              {!searchQuery && youtubeVideos.slice(0, 6).map((video) => (
+                <motion.div
+                  key={`youtube-${video.videoId}`}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  whileHover={{ y: -5 }}
+                >
+                  <YouTubeCard 
+                    video={video} 
+                    onClick={setSelectedVideo} 
+                  />
+                </motion.div>
+              ))}
+
               {/* Game Cards */}
               {games.map((game) => (
                 <motion.div
@@ -196,6 +217,10 @@ export default function App() {
       <GameOverlay 
         game={selectedGame} 
         onClose={() => setSelectedGame(null)} 
+      />
+      <YouTubeOverlay 
+        video={selectedVideo}
+        onClose={() => setSelectedVideo(null)}
       />
       <ThemeSwitcher />
     </div>
