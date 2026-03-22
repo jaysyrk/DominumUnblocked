@@ -29,7 +29,7 @@ export function useYouTubeVideos(searchQuery: string) {
         const params = new URLSearchParams({
           part: 'snippet',
           type: 'video',
-          maxResults: '12',
+          maxResults: '24',
           order: searchQuery ? 'relevance' : 'viewCount',
           q: searchQuery ? `${searchQuery} gameplay` : DEFAULT_QUERY,
           videoEmbeddable: 'true',
