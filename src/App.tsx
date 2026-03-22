@@ -30,7 +30,7 @@ export default function App() {
       {showBackToTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-8 right-8 z-50 bg-[var(--accent)] text-white rounded-full shadow-lg p-3 hover:bg-blue-700 transition-all flex items-center justify-center"
+          className="fixed bottom-8 left-8 z-50 bg-[var(--accent)] text-white rounded-full shadow-lg p-3 hover:bg-blue-700 transition-all flex items-center justify-center"
           aria-label="Back to top"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
